@@ -75,15 +75,25 @@ def handle_message(event):
         message = Portfolio_Template()
         line_bot_api.reply_message(event.reply_token, message)
     elif '自我介紹' in msg:
+        message = About_Me_Template()
+        line_bot_api.reply_message(event.reply_token, message)
+    elif '小遊戲' in msg:
         confirm_template = ConfirmTemplate(text='要不要猜猜看我的生日?', actions=[
             MessageAction(label='好呀!', text='好呀!'),
-            URITemplateAction(label='不要...', uri="https://youtu.be/072tU1tamd0"),
+            URITemplateAction(label='Nope(不要點)', uri="https://youtu.be/072tU1tamd0"),
         ])
+        message = TemplateSendMessage(alt_text='Confirm alt text', template=confirm_template)
+        line_bot_api.reply_message(event.reply_token, message)
+    elif '簡歷' in msg:
         line_bot_api.reply_message(
             event.reply_token, [
                 TextSendMessage(text="目前就讀於宜蘭大學資工系四年級，目前在全球人壽數位科技部擔任實習生，負責系統開發與維運。從小就對於電腦很有興趣，特別對於一些遊戲和網站背後是如何運作的一直懷有很大的好奇心 ，這也驅使我從小就常利用閒暇時間，研究電腦相關的事物。"),
-                TextSendMessage(text="從小就熱愛研究，小時候性格比較內向，為了提升與人交際的能力，我也常刻意利用課餘時間參加社團與系學會活動 。大三我甚至接下了系學會副會長，對於解決問題、團隊溝通、主辦活動等能力有很大的幫助，同時也造就了我平易近人、與人為善、容易融入團體的個性。"),
-                TemplateSendMessage(alt_text='Confirm alt text', template=confirm_template)
+                TextSendMessage(text="小時候性格比較內向，為了提升與人交際的能力，我也常刻意利用課餘時間參加社團與系學會活動 。大三我甚至接下了系學會副會長，對於解決問題、團隊溝通、主辦活動等能力有很大的幫助，同時也造就了我平易近人、與人為善、容易融入團體的個性。"),
+            ])
+    elif '其他業餘興趣' in msg:
+        line_bot_api.reply_message(
+            event.reply_token, [
+                TextSendMessage(text="功能開發中"),
             ])
     elif '學校經歷' in msg:
         line_bot_api.reply_message(
@@ -105,7 +115,7 @@ def handle_message(event):
                 TextSendMessage(text="這些對我來說都是非常難能可貴的實務經驗。特別是從需求訪談、架構規劃、檔案設計、程式設計、測試規劃、版本控管、上線部署、維運監控...等一系列的實作更讓我獲益良多。總結來說我相信，務實的工作經驗、良好的團隊溝通、深耕的專業能力、效率的時間規劃是我由學校跨入職場最重要的基礎。")
             ])
     elif '未來展望' in msg:
-        message = TextSendMessage(text="未來我計劃持續擴充我的學習領域去涵蓋如：Machine Learning、Deep Learning、ChatBot(如：IBM Watson、Microsoft Azure)、RPA(Robotic Process Automation)、...等新興科技的範疇。")
+        message = TextSendMessage(text="未來我計劃持續擴充我的學習領域去涵蓋如：Machine Learning、Deep Learning、ChatBot(如：IBM Watson、Microsoft Azure)、RPA(Robotic Process Automation)、...等新興科技的範疇。\n(ps：希望能為像Line這樣的好公司提供我的價值)")
         line_bot_api.reply_message(event.reply_token, message)
     elif '比賽成果' in msg:
         message = TextSendMessage(text="●大三專題製作競賽獲得最佳互動應用獎\n●2020程式設計暨資訊應用競賽創意發想組獲得數位學習獎\n●2020程式設計暨資訊應用競賽創新實作專業組獲得入選獎\n●LINE FRESH 2020校園競賽黑客松組晉級決賽")
@@ -113,17 +123,37 @@ def handle_message(event):
     elif '參加活動' in msg:
         message = TextSendMessage(text="●2019 Microsoft電腦科學暨人工智慧師生營\n●LINE TAIWAN TECHPULSE 2020\n●HTC青年城市論壇 2020")
         line_bot_api.reply_message(event.reply_token, message)
-    elif 'b' in msg:
-        confirm_template = ConfirmTemplate(text='要不要猜猜看我的生日?', actions=[
-            MessageAction(label='好呀!', text='好呀!'),
-            URITemplateAction(label='不要...', uri="https://youtu.be/072tU1tamd0"),
-        ])
-        message = TemplateSendMessage(
-            alt_text='Confirm alt text', template=confirm_template)
-        line_bot_api.reply_message(event.reply_token, message)
     elif '好呀!' in msg:
         message = Birthday_guess()
         line_bot_api.reply_message(event.reply_token, message)
+    elif '1986-02-04' in msg:
+        line_bot_api.reply_message(
+            event.reply_token, [
+                TextSendMessage(text="我看起來這麼老嗎..."),
+                StickerSendMessage(
+                    package_id=11539,
+                    sticker_id=52114145),
+                Birthday_guess()
+            ])
+    elif '1999-08-25' in msg:
+        line_bot_api.reply_message(
+            event.reply_token, [
+                TextSendMessage(text="Bingo！但沒有禮物~"),
+                StickerSendMessage(
+                    package_id=11539,
+                    sticker_id=52114117),
+            ])
+    elif '2004-01-27' in msg:
+        line_bot_api.reply_message(
+            event.reply_token, [
+                TextSendMessage(text="我保養的還不錯喔~"),
+                StickerSendMessage(
+                    package_id=11539,
+                    sticker_id=52114130),
+                Birthday_guess()
+            ])
+    elif '功能開發中' in msg:
+                message = TextSendMessage(text="功能開發中")
     else:
         line_bot_api.reply_message(
             event.reply_token, [

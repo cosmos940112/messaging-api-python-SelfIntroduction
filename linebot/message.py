@@ -3,28 +3,23 @@ from linebot.exceptions import (InvalidSignatureError)
 from linebot.models import *
 
 def Birthday_guess():
-    message = TemplateSendMessage(
-        alt_text='生日',
-        template=ButtonsTemplate(
-            thumbnail_image_url="https://pic2.zhimg.com/v2-de4b8114e8408d5265503c8b41f59f85_b.jpg",
-            title="我猜我猜我猜猜!!!",
-            text="輸入生日後即獲得抽獎機會",
-            actions=[
-                DatetimePickerTemplateAction(
-                    label="請選擇生日",
-                    data="input_birthday",
-                    mode='date',
-                    initial='1990-01-01',
-                    max='2019-03-10',
-                    min='1930-01-01'
+    message = TextSendMessage(
+        text='我猜我猜我猜猜猜!!!',
+        quick_reply=QuickReply(
+            items=[
+                QuickReplyButton(
+                    action=MessageAction(label="1986-02-04", text="1986-02-04")
                 ),
-                URITemplateAction(
-                    label="我反悔了...",
-                    uri="https://youtu.be/072tU1tamd0"
-                )
-            ]
-        )
-    )
+                QuickReplyButton(
+                    action=MessageAction(label="1999-08-25", text="1999-08-25")
+                ),
+                QuickReplyButton(
+                    action=MessageAction(label="2004-01-27", text="2004-01-27")
+                ),
+                QuickReplyButton(
+                    action=URIAction(label="不知道啦幹", uri="https://youtu.be/072tU1tamd0")
+                ),
+            ]))
     return message
 
 def Portfolio_Template():
@@ -164,6 +159,33 @@ def School_Template():
                         MessageTemplateAction(
                             label="參加過什麼比賽?",
                             text="比賽成果"
+                        )
+                    ]
+                )
+            ]
+        )
+    )
+    return message
+
+def About_Me_Template():
+    message = TemplateSendMessage(
+        alt_text='學校經歷',
+        template=CarouselTemplate(
+             columns=[
+                CarouselColumn(
+                    text="想知道哪個部分?",
+                    actions=[
+                        MessageTemplateAction(
+                            label="簡歷(想看客套話的就點)",
+                            text='簡歷'
+                        ),
+                        MessageTemplateAction(
+                            label="其他業餘興趣",
+                            text='其他業餘興趣'
+                        ),
+                        MessageTemplateAction(
+                            label="小遊戲",
+                            text="小遊戲"
                         )
                     ]
                 )
